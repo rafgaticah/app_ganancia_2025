@@ -31,7 +31,7 @@
             margin-bottom: 20px;
         }
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.8rem; /* Default size for h2, adjusted below for specific elements */
             color: #2d3748;
             margin-top: 30px;
             margin-bottom: 15px;
@@ -121,10 +121,17 @@
             color: #2d3748;
             margin-bottom: 20px;
         }
-        .block-info {
+        .block-info { /* Original block info style, will be overridden for large display */
             font-size: 1.1rem;
             color: #4a5568;
             margin-bottom: 10px;
+        }
+        /* New style for the large block number display */
+        .block-number-display-large {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d3748; /* Dark gray for text, similar to other headings */
+            margin-bottom: 10px; /* Space between block number and money */
         }
         .results-table {
             width: 100%;
@@ -151,6 +158,20 @@
             color: #38a169;
             margin-top: 30px;
         }
+        /* New styles for specific result metrics */
+        .result-metric-large {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 15px; /* Adjust margin as needed */
+            margin-bottom: 15px; /* Adjust margin as needed */
+        }
+        .text-black { color: #000000; }
+        .text-red-500 { color: #ef4444; }
+        .text-blue-500 { color: #3b82f6; }
+        .text-fuchsia-600 { color: #c026d3; }
+        .text-orange-500 { color: #f97316; }
+
+
         .hidden {
             display: none;
         }
@@ -295,7 +316,7 @@
             border: 1px solid #e2e8f0;
             border-radius: 15px;
             background-color: #edf2f7;
-            position: relative; /* Needed for absolute positioning of value display */
+            position: relative;
         }
         .slider-labels {
             display: flex;
@@ -303,7 +324,7 @@
             font-size: 0.9rem;
             color: #4a5568;
             margin-top: 5px;
-            padding: 0 12px; /* Adjust padding to align with thumb start/end */
+            padding: 0 12px;
         }
         .slider-emojis {
             display: flex;
@@ -313,7 +334,7 @@
         }
         .slider-emojis span {
             font-size: 2rem;
-            flex-shrink: 0; /* Prevent emojis from shrinking */
+            flex-shrink: 0;
         }
         input[type="range"] {
             width: 100%;
@@ -326,8 +347,8 @@
             transition: opacity .2s;
             -webkit-appearance: none;
             appearance: none;
-            margin: 0 10px; /* Adjust margin to give space for emojis */
-            flex-grow: 1; /* Allow slider to grow */
+            margin: 0 10px;
+            flex-grow: 1;
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -347,24 +368,23 @@
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        /* Style for the live value display above the slider */
         .slider-value-display-wrapper {
             position: relative;
-            height: 20px; /* Space for the bubble */
-            width: 100%; /* Match slider width for positioning */
+            height: 20px;
+            width: 100%;
         }
         .slider-value-display {
             position: absolute;
-            top: -25px; /* Adjust as needed */
+            top: -25px;
             font-size: 1.1rem;
             font-weight: bold;
             color: #3182ce;
-            transform: translateX(-50%); /* Center based on its own width */
+            transform: translateX(-50%);
             background-color: white;
             padding: 2px 8px;
             border-radius: 5px;
             border: 1px solid #a0aec0;
-            min-width: 20px; /* Ensure it's not too small */
+            min-width: 20px;
             text-align: center;
         }
     </style>
@@ -390,8 +410,11 @@
         </div>
 
         <div id="game-screen" class="hidden">
-            <h1 class="mb-4">Ejercicio de Sustracción Sucesiva</h1>
-            
+            <!-- Bloque de información movido y estilizado -->
+            <div class="block-number-display-large">
+                Bloque: <span id="block-number">1</span> / 4
+            </div>
+
             <div class="money-display-area">
                 <p class="text-xl text-gray-700 mb-2">Dinero Actual:</p>
                 <div id="current-money-large" class="text-5xl font-extrabold text-green-600 mb-4">$100.000</div>
@@ -399,9 +422,6 @@
                     </div>
             </div>
 
-            <div class="block-info">
-                <p>Bloque: <span id="block-number">1</span> / 4</p>
-            </div>
             <div class="timer-display">Tiempo restante: <span id="timer">60</span> segundos</div>
             <div class="task-area">
                 <p class="text-xl text-gray-700 mb-3">Número actual:</p>
@@ -460,38 +480,39 @@
         </div>
 
         <div id="results-screen" class="hidden">
-            <h1>Resultados del Ejercicio</h1>
-            <div class="results-summary">
-                <p>Aquí se presentan los resultados finales de tu desempeño en el ejercicio.</p>
-            </div>
-
-            <h2>Resumen por Bloque</h2>
+            <h2 class="result-metric-large text-black">Resumen por Bloque</h2>
             <ul id="results-list-body" class="block-result-list">
                 </ul>
 
-            <h2 class="mt-8">Errores Totales: <span id="total-errors-display">0</span></h2>
+            <h2 class="result-metric-large text-red-500">Errores Totales: <span id="total-errors-display">0</span></h2>
             <h2 class="final-money">Dinero Final Total: $<span id="final-money-display"></span></h2>
-            <h2 class="mt-8">Índice de Aprendizaje: <span id="learning-index-display"></span></h2>
-            <h2 class="mt-8">Estado Anímico: <span id="final-mood-display"></span> / 10</h2>
-            <h2 class="mt-4">Estado Cognitivo: <span id="final-cognitive-display"></span> / 10</h2>
+            <h2 class="result-metric-large text-blue-500">Índice de Aprendizaje: <span id="learning-index-display"></span></h2>
+            <h2 class="result-metric-large text-fuchsia-600">Estado Anímico: <span id="final-mood-display"></span> / 10</h2>
+            <h2 class="result-metric-large text-orange-500">Estado Cognitivo: <span id="final-cognitive-display"></span> / 10</h2>
 
 
             <div class="share-results-section">
                 <h2>Registra tus resultados</h2>
-                <p>Puedes registrar tus resultados de este ejercicio en tu Google Sheet a través del siguiente enlace. Una vez abierta la hoja, simplemente pega los datos copiados de abajo en una nueva fila.</p>
-                <a id="google-sheet-link" href="https://docs.google.com/spreadsheets/d/10XfjtPk03WRx3C-0MD4lC28O0FtfEE2ndxkIj_m--bE/edit?usp=sharing" target="_blank">
-                    Abrir Google Sheet para Pegar Resultados
-                </a>
+                <p>Para registrar tus resultados en la hoja de Excel, sigue estos pasos:</p>
+                <ol class="list-decimal list-inside text-left ml-4">
+                    <li>Haz clic en el botón "Copiar Datos" para guardar tus resultados en el portapapeles.</li>
+                    <li>Haz clic en "Abrir Excel" para ir a la hoja de cálculo.</li>
+                    <li>En la hoja de Excel, busca la primera fila disponible y **pega los datos** (Ctrl+V o Cmd+V) en la primera columna.</li>
+                </ol>
                 
-                <button id="copy-results-button" class="copy-button">Copiar Datos para Google Sheets</button>
+                <button id="copy-results-button" class="copy-button">Copiar Datos para Excel</button>
                 <p id="copy-feedback-message" class="copy-feedback"></p>
+
+                <a id="excel-link" href="https://uccl0-my.sharepoint.com/:x:/g/personal/rigatica_uc_cl/ESDL0UwD9MlLknXtF8rLifwBv8G7pHcY9hrMyl0YJUH0wA?e=cmc2fg" target="_blank" class="mt-4">
+                    Abrir Excel para Pegar Resultados
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // URL de tu Google Sheet (para abrir y pegar manualmente)
-        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/10XfjtPk03WRx3C-0MD4lC28O0FtfEE2ndxkIj_m--bE/edit?usp=sharing'; 
+        // URL de tu hoja de Excel (SharePoint)
+        const EXCEL_URL = 'https://uccl0-my.sharepoint.com/:x:/g/personal/rigatica_uc_cl/ESDL0UwD9MlLknXtF8rLifwBv8G7pHcY9hrMyl0YJUH0wA?e=cmc2fg'; 
 
         // Variables globales
         let currentNumber = 1000;
@@ -544,7 +565,7 @@
         const finalMoneyDisplay = document.getElementById('final-money-display');
         const learningIndexDisplay = document.getElementById('learning-index-display');
         const totalErrorsDisplay = document.getElementById('total-errors-display');
-        const googleSheetLink = document.getElementById('google-sheet-link');
+        const excelLink = document.getElementById('excel-link'); // Changed from googleSheetLink
 
         const currentMoneyLargeDisplay = document.getElementById('current-money-large');
         const moneyImagesContainer = document.getElementById('money-images-container');
@@ -563,7 +584,6 @@
         const copyResultsButton = document.getElementById('copy-results-button');
         const copyFeedbackMessage = document.getElementById('copy-feedback-message');
 
-        // New DOM elements for slider value display
         const moodValueDisplay = document.getElementById('mood-value-display');
         const cognitiveValueDisplay = document.getElementById('cognitive-value-display');
 
@@ -809,8 +829,12 @@
                 const thumbWidth = 25; // Approximate width of the slider thumb
                 const trackWidth = this.offsetWidth - thumbWidth;
                 const value = (this.value - this.min) / (this.max - this.min);
-                const offset = (thumbWidth / 2) - (value * thumbWidth);
-                moodValueDisplay.style.left = `calc(${value * 100}% + ${offset}px)`;
+                // Calculate the position of the value display relative to the slider track
+                const displayPosition = value * trackWidth;
+                moodValueDisplay.style.left = `${displayPosition}px`;
+                // Adjust for centering the value display over the thumb
+                const offset = thumbWidth * (0.5 - value);
+                moodValueDisplay.style.transform = `translateX(${offset}px)`;
             };
 
             cognitiveSlider.oninput = function() {
@@ -818,9 +842,12 @@
                 const thumbWidth = 25;
                 const trackWidth = this.offsetWidth - thumbWidth;
                 const value = (this.value - this.min) / (this.max - this.min);
-                const offset = (thumbWidth / 2) - (value * thumbWidth);
-                cognitiveValueDisplay.style.left = `calc(${value * 100}% + ${offset}px)`;
+                const displayPosition = value * trackWidth;
+                cognitiveValueDisplay.style.left = `${displayPosition}px`;
+                const offset = thumbWidth * (0.5 - value);
+                cognitiveValueDisplay.style.transform = `translateX(${offset}px)`;
             };
+
 
             // Set initial positions for the value displays
             // Small timeout to ensure slider is rendered before calculating offset
@@ -843,7 +870,8 @@
             const errorsBlockData = [];
             const timeBlockData = [];
 
-            for (let i = 0; i < 4; i++) {
+            // Ensure all 4 blocks have data, fill with 'N/A' if not completed
+            for (let i = 0; i < totalBlocks; i++) {
                 errorsBlockData.push(blockResults[i] ? blockResults[i].errors : 'N/A');
                 timeBlockData.push(blockResults[i] ? (blockResults[i].time === 'N/A' ? 'N/A' : parseFloat(blockResults[i].time)) : 'N/A');
             }
@@ -867,7 +895,7 @@
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    copyFeedbackMessage.textContent = '¡Datos copiados! Ahora puedes pegarlos en tu Google Sheet.';
+                    copyFeedbackMessage.textContent = '¡Datos copiados! Ahora puedes pegarlos en tu hoja de Excel.';
                     copyFeedbackMessage.style.color = '#38a169'; // Green color for success
                 } else {
                     copyFeedbackMessage.textContent = 'Error al copiar. Por favor, copia manualmente.';
@@ -894,7 +922,9 @@
 
             resultsListBody.innerHTML = '';
 
-            blockResults.forEach(res => {
+            // Ensure all 4 blocks are represented in the results list, even if incomplete
+            for (let i = 0; i < totalBlocks; i++) {
+                const res = blockResults[i] || { block: i + 1, errors: 'N/A', time: 'N/A', moneyChange: 0 };
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
                     <strong>Bloque ${res.block}:</strong>
@@ -903,7 +933,8 @@
                     Ganancia: ${res.moneyChange.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
                 `;
                 resultsListBody.appendChild(listItem);
-            });
+            }
+
 
             totalErrorsDisplay.textContent = totalErrors;
             finalMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL');
@@ -911,8 +942,8 @@
             finalMoodDisplay.textContent = finalMood; // Display final mood
             finalCognitiveDisplay.textContent = finalCognitiveState; // Display final cognitive state
 
-            // Set the Google Sheet URL when showing results
-            googleSheetLink.href = GOOGLE_SHEET_URL;
+            // Set the Excel URL when showing results
+            excelLink.href = EXCEL_URL;
         }
 
         // Event listener for the copy button
