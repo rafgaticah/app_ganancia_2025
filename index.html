@@ -36,6 +36,12 @@
             margin-top: 30px;
             margin-bottom: 15px;
         }
+        h3 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
         .instructions, .results-summary {
             text-align: left;
             margin-bottom: 30px;
@@ -101,8 +107,13 @@
         .message {
             margin-top: 15px;
             font-size: 1rem;
-            color: #e53e3e;
             min-height: 24px; /* Para evitar CLS */
+        }
+        .message.error {
+            color: #e53e3e; /* Rojo para errores */
+        }
+        .message.success {
+            color: #38a169; /* Verde para aciertos */
         }
         .timer-display {
             font-size: 1.5rem;
@@ -115,7 +126,7 @@
             color: #4a5568;
             margin-bottom: 10px;
         }
-        .results-table { /* Esta clase ya no se usa para la tabla, pero se mantiene por si acaso */
+        .results-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
@@ -177,6 +188,185 @@
         .block-result-list li strong {
             color: #2d3748;
         }
+        .money-display-area {
+            background-color: #d1fae5;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #a7f3d0;
+        }
+        .money-images-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-height: 30px;
+        }
+        .money-emoji {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        /* Estilos para la información del bloque en la pantalla intersticial */
+        .interstitial-block-results {
+            font-size: 1.5rem;
+            color: #4a5568;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .interstitial-money-gain {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #38a169;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .interstitial-money-images {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .interstitial-money-images .money-emoji {
+            font-size: 3rem;
+        }
+        .interstitial-current-money-display {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .share-results-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .share-results-section p {
+            margin-bottom: 15px;
+        }
+        .share-results-section a {
+            display: inline-block;
+            background-color: #4285F4;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .share-results-section a:hover {
+            background-color: #357ae8;
+        }
+        .copy-button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .copy-button:hover {
+            background-color: #0b4b8a;
+        }
+        .copy-feedback {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #38a169;
+            min-height: 18px;
+        }
+        /* New styles for mood assessment screen */
+        .mood-assessment-screen {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        .slider-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            background-color: #edf2f7;
+            position: relative; /* Needed for absolute positioning of value display */
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-top: 5px;
+            padding: 0 12px; /* Adjust padding to align with thumb start/end */
+        }
+        .slider-emojis {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .slider-emojis span {
+            font-size: 2rem;
+            flex-shrink: 0; /* Prevent emojis from shrinking */
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #cbd5e0;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0 10px; /* Adjust margin to give space for emojis */
+            flex-grow: 1; /* Allow slider to grow */
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #3182ce;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #3182ce;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        /* Style for the live value display above the slider */
+        .slider-value-display-wrapper {
+            position: relative;
+            height: 20px; /* Space for the bubble */
+            width: 100%; /* Match slider width for positioning */
+        }
+        .slider-value-display {
+            position: absolute;
+            top: -25px; /* Adjust as needed */
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #3182ce;
+            transform: translateX(-50%); /* Center based on its own width */
+            background-color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            border: 1px solid #a0aec0;
+            min-width: 20px; /* Ensure it's not too small */
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -187,12 +377,12 @@
                 <p>Este ejercicio es una adaptación de una actividad utilizada para estudiar la relación entre motivación y desempeño.</p>
                 <p>Tu objetivo es realizar una <strong>sustracción sucesiva de 13 unidades</strong>, partiendo desde el número <strong>1000</strong>, hasta <strong>superar el número 900</strong>. Deberás ingresar el siguiente número en la secuencia.</p>
                 <p>Tienes <strong>4 bloques de un minuto</strong> de duración cada uno. Si cometes un error, la secuencia <strong>se reiniciará automáticamente desde 1000</strong>. Si logras superar el 900, el bloque se considera exitoso y no necesitarás seguir intentando en ese bloque.</p>
-                <p>Al inicio, cuentas con <strong>\$100.000 de dinero ficticio</strong>. Recibirás dinero adicional por cada secuencia exitosa de la siguiente manera:</p>
+                <p>Al inicio, cuentas con <strong>$100.000 de dinero ficticio</strong>. Recibirás dinero adicional por cada secuencia exitosa de la siguiente manera:</p>
                 <ul class="list-disc pl-5 mt-2">
-                    <li>Primera secuencia exitosa: <strong>\$10.000</strong></li>
-                    <li>Segunda secuencia exitosa: <strong>\$20.000</strong></li>
-                    <li>Tercera secuencia exitosa: <strong>\$20.000</strong></li>
-                    <li>Cuarta secuencia exitosa: <strong>\$50.000</strong></li>
+                    <li>Primera secuencia exitosa: <strong>$10.000</strong></li>
+                    <li>Segunda secuencia exitosa: <strong>$20.000</strong></li>
+                    <li>Tercera secuencia exitosa: <strong>$20.000</strong></li>
+                    <li>Cuarta secuencia exitosa: <strong>$50.000</strong></li>
                 </ul>
                 <p class="mt-4">¡Tu desempeño influirá directamente en la cantidad de dinero que acumules!</p>
             </div>
@@ -201,9 +391,16 @@
 
         <div id="game-screen" class="hidden">
             <h1 class="mb-4">Ejercicio de Sustracción Sucesiva</h1>
+            
+            <div class="money-display-area">
+                <p class="text-xl text-gray-700 mb-2">Dinero Actual:</p>
+                <div id="current-money-large" class="text-5xl font-extrabold text-green-600 mb-4">$100.000</div>
+                <div id="money-images-container" class="money-images-container">
+                    </div>
+            </div>
+
             <div class="block-info">
                 <p>Bloque: <span id="block-number">1</span> / 4</p>
-                <p>Dinero inicial: $<span id="current-block-money">100.000</span></p>
             </div>
             <div class="timer-display">Tiempo restante: <span id="timer">60</span> segundos</div>
             <div class="task-area">
@@ -215,15 +412,51 @@
                 </div>
                 <div class="message" id="feedback-message"></div>
             </div>
-            <div class="block-details text-gray-600 text-sm">
-                <p>Errores en este bloque: <span id="block-errors">0</span></p>
-                <p>Secuencias completadas en este bloque: <span id="block-successes">0</span></p>
-            </div>
         </div>
 
         <div id="interstitial-screen" class="hidden interstitial-screen">
-            <p>Preparando siguiente bloque...</p>
-            <p>El siguiente bloque comienza en <span id="interstitial-timer">10</span> segundos.</p>
+            <h2 id="interstitial-block-title">Bloque Completado</h2>
+            <p id="interstitial-block-gain" class="interstitial-money-gain"></p>
+            <p class="interstitial-current-money-display">Dinero Actual: <span id="interstitial-current-money"></span></p>
+            <div id="interstitial-money-images" class="interstitial-money-images"></div>
+            <p class="mt-8">El siguiente bloque comienza en <span id="interstitial-timer">10</span> segundos.</p>
+        </div>
+
+        <div id="mood-assessment-screen" class="hidden mood-assessment-screen">
+            <h1>Evalúa tu Estado</h1>
+            <p class="instructions">Por favor, indica tu estado actual en las siguientes escalas. Mueve el deslizador para seleccionar el número.</p>
+
+            <div class="slider-group">
+                <h3>Estado Anímico: Negativo (1) — Positivo (10)</h3>
+                <div class="slider-value-display-wrapper">
+                    <span id="mood-value-display" class="slider-value-display">5</span>
+                </div>
+                <div class="slider-emojis">
+                    <span>😞</span>
+                    <input type="range" min="1" max="10" value="5" id="mood-slider">
+                    <span>😄</span>
+                </div>
+                <div class="slider-labels">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                </div>
+            </div>
+
+            <div class="slider-group">
+                <h3>Estado Cognitivo: Descansado (1) — Cansado (10)</h3>
+                <div class="slider-value-display-wrapper">
+                    <span id="cognitive-value-display" class="slider-value-display">5</span>
+                </div>
+                <div class="slider-emojis">
+                    <span>😌</span>
+                    <input type="range" min="1" max="10" value="5" id="cognitive-slider">
+                    <span>😩</span>
+                </div>
+                <div class="slider-labels">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                </div>
+            </div>
+
+            <button id="continue-to-results-button" class="mt-8">Ver Resultados Finales</button>
         </div>
 
         <div id="results-screen" class="hidden">
@@ -234,39 +467,58 @@
 
             <h2>Resumen por Bloque</h2>
             <ul id="results-list-body" class="block-result-list">
-                <!-- Resultados por bloque se insertarán aquí -->
-            </ul>
+                </ul>
 
             <h2 class="mt-8">Errores Totales: <span id="total-errors-display">0</span></h2>
             <h2 class="final-money">Dinero Final Total: $<span id="final-money-display"></span></h2>
             <h2 class="mt-8">Índice de Aprendizaje: <span id="learning-index-display"></span></h2>
+            <h2 class="mt-8">Estado Anímico: <span id="final-mood-display"></span> / 10</h2>
+            <h2 class="mt-4">Estado Cognitivo: <span id="final-cognitive-display"></span> / 10</h2>
+
+
+            <div class="share-results-section">
+                <h2>Registra tus resultados</h2>
+                <p>Puedes registrar tus resultados de este ejercicio en tu Google Sheet a través del siguiente enlace. Una vez abierta la hoja, simplemente pega los datos copiados de abajo en una nueva fila.</p>
+                <a id="google-sheet-link" href="https://docs.google.com/spreadsheets/d/10XfjtPk03WRx3C-0MD4lC28O0FtfEE2ndxkIj_m--bE/edit?usp=sharing" target="_blank">
+                    Abrir Google Sheet para Pegar Resultados
+                </a>
+                
+                <button id="copy-results-button" class="copy-button">Copiar Datos para Google Sheets</button>
+                <p id="copy-feedback-message" class="copy-feedback"></p>
+            </div>
         </div>
     </div>
 
     <script>
+        // URL de tu Google Sheet (para abrir y pegar manualmente)
+        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/10XfjtPk03WRx3C-0MD4lC28O0FtfEE2ndxkIj_m--bE/edit?usp=sharing'; 
+
         // Variables globales
         let currentNumber = 1000;
         let expectedNextNumber = 1000 - 13;
-        let sequenceStep = 0; // Para rastrear el paso actual en la secuencia 1000, 987, 974...
+        let sequenceStep = 0;
         let timerInterval;
         let interstitialTimerInterval;
         let timeLeft = 60;
         let interstitialTimeLeft = 10;
         let currentBlock = 1;
         const totalBlocks = 4;
-        let totalMoney = 100000; // Dinero inicial para el grupo G
-        let successfulSequencesCount = 0; // Para el cálculo de dinero
+        let totalMoney = 100000;
+        let successfulSequencesCount = 0;
         let blockErrors = 0;
-        let totalErrors = 0; // Nueva variable para errores totales
+        let totalErrors = 0;
         let blockSuccess = false;
         let blockStartTime;
         let blockEndTime;
-        let blockTimes = []; // Almacena los tiempos en segundos de los bloques exitosos
+        let blockTimes = []; // Stores times only for successful blocks
 
-        // Almacenar los resultados de cada bloque
-        const blockResults = [];
+        const blockResults = []; // Stores detailed results for each block
 
-        // Recompensas
+        // Variables para estado de ánimo y cognitivo
+        let finalMood = 5; // Default value
+        let finalCognitiveState = 5; // Default value
+        const TASK_TYPE = "Ganancia"; // Identificador de la tarea para copiar
+
         const rewards = {
             1: 10000,
             2: 20000,
@@ -278,22 +530,43 @@
         const introScreen = document.getElementById('intro-screen');
         const gameScreen = document.getElementById('game-screen');
         const interstitialScreen = document.getElementById('interstitial-screen');
+        const moodAssessmentScreen = document.getElementById('mood-assessment-screen');
         const resultsScreen = document.getElementById('results-screen');
         const startButton = document.getElementById('start-button');
         const blockNumberDisplay = document.getElementById('block-number');
-        const currentBlockMoneyDisplay = document.getElementById('current-block-money');
         const timerDisplay = document.getElementById('timer');
         const interstitialTimerDisplay = document.getElementById('interstitial-timer');
         const currentDisplay = document.getElementById('current-display');
         const userInput = document.getElementById('user-input');
         const submitButton = document.getElementById('submit-button');
         const feedbackMessage = document.getElementById('feedback-message');
-        const blockErrorsDisplay = document.getElementById('block-errors');
-        const blockSuccessesDisplay = document.getElementById('block-successes');
-        const resultsListBody = document.getElementById('results-list-body'); // CAMBIO: Ahora es una lista UL
+        const resultsListBody = document.getElementById('results-list-body');
         const finalMoneyDisplay = document.getElementById('final-money-display');
         const learningIndexDisplay = document.getElementById('learning-index-display');
-        const totalErrorsDisplay = document.getElementById('total-errors-display'); // Nuevo elemento DOM
+        const totalErrorsDisplay = document.getElementById('total-errors-display');
+        const googleSheetLink = document.getElementById('google-sheet-link');
+
+        const currentMoneyLargeDisplay = document.getElementById('current-money-large');
+        const moneyImagesContainer = document.getElementById('money-images-container');
+
+        const interstitialBlockTitle = document.getElementById('interstitial-block-title');
+        const interstitialBlockGain = document.getElementById('interstitial-block-gain');
+        const interstitialMoneyImages = document.getElementById('interstitial-money-images');
+        const interstitialCurrentMoneyDisplay = document.getElementById('interstitial-current-money');
+
+        const moodSlider = document.getElementById('mood-slider');
+        const cognitiveSlider = document.getElementById('cognitive-slider');
+        const continueToResultsButton = document.getElementById('continue-to-results-button');
+        const finalMoodDisplay = document.getElementById('final-mood-display');
+        const finalCognitiveDisplay = document.getElementById('final-cognitive-display');
+
+        const copyResultsButton = document.getElementById('copy-results-button');
+        const copyFeedbackMessage = document.getElementById('copy-feedback-message');
+
+        // New DOM elements for slider value display
+        const moodValueDisplay = document.getElementById('mood-value-display');
+        const cognitiveValueDisplay = document.getElementById('cognitive-value-display');
+
 
         // Función para resetear la secuencia
         function resetSequence() {
@@ -301,7 +574,6 @@
             expectedNextNumber = 1000 - 13;
             sequenceStep = 0;
             currentDisplay.textContent = currentNumber;
-            feedbackMessage.textContent = '';
             userInput.value = '';
             userInput.focus();
         }
@@ -316,6 +588,8 @@
                 timerDisplay.textContent = timeLeft;
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
+                    userInput.disabled = true;
+                    submitButton.disabled = true;
                     endBlock('Tiempo agotado');
                 }
             }, 1000);
@@ -324,35 +598,44 @@
         // Función para registrar un error
         function recordError() {
             blockErrors++;
-            totalErrors++; // Incrementa los errores totales
-            blockErrorsDisplay.textContent = blockErrors;
+            totalErrors++;
             feedbackMessage.textContent = '¡Error! Reiniciando secuencia desde 1000.';
-            resetSequence(); // Reinicia automáticamente la secuencia
+            feedbackMessage.className = 'message error';
+
+            resetSequence();
         }
 
         // Función para finalizar un bloque
         function endBlock(status) {
             clearInterval(timerInterval);
             blockEndTime = Date.now();
-            let timeTaken = (blockEndTime - blockStartTime) / 1000; // Tiempo en segundos
+            let timeTaken = (blockEndTime - blockStartTime) / 1000;
 
             let moneyEarnedThisBlock = 0;
             let blockStatus = status;
-            let blockTimeForTable = 'N/A'; // Default para bloques no exitosos
+            let blockTimeForTable = 'N/A';
+
+            feedbackMessage.textContent = '';
+            feedbackMessage.className = 'message';
 
             if (blockSuccess) {
                 successfulSequencesCount++;
                 moneyEarnedThisBlock = rewards[successfulSequencesCount] || 0;
                 totalMoney += moneyEarnedThisBlock;
                 blockStatus = 'Éxito';
-                blockTimes.push(timeTaken); // Solo registra el tiempo si fue exitoso
+                blockTimes.push(timeTaken);
                 blockTimeForTable = timeTaken.toFixed(2);
+
+                const moneyEmoji = document.createElement('span');
+                moneyEmoji.textContent = '💰';
+                moneyEmoji.className = 'money-emoji';
+                moneyImagesContainer.appendChild(moneyEmoji);
             } else if (status === 'Tiempo agotado') {
                 blockStatus = 'Tiempo agotado';
                 moneyEarnedThisBlock = 0;
-                blockTimeForTable = '60.00'; // Se agotó el tiempo, reportar 60 segundos
+                blockTimeForTable = '60.00';
             } else {
-                 blockStatus = 'Fallo'; // Esto sería si el usuario se rinde o algo similar
+                 blockStatus = 'Fallo';
                  moneyEarnedThisBlock = 0;
             }
 
@@ -366,9 +649,21 @@
 
             currentBlock++;
             if (currentBlock <= totalBlocks) {
-                // Mostrar pantalla intersticial y empezar cuenta regresiva
                 gameScreen.classList.add('hidden');
                 interstitialScreen.classList.remove('hidden');
+
+                interstitialBlockTitle.textContent = `Bloque ${currentBlock - 1} Completado`;
+                interstitialBlockGain.textContent = `Ganancia en este bloque: ${moneyEarnedThisBlock.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}`;
+                interstitialCurrentMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+                
+                interstitialMoneyImages.innerHTML = '';
+                for (let i = 0; i < successfulSequencesCount; i++) {
+                    const moneyEmojiLarge = document.createElement('span');
+                    moneyEmojiLarge.textContent = '💰';
+                    moneyEmojiLarge.className = 'money-emoji';
+                    interstitialMoneyImages.appendChild(moneyEmojiLarge);
+                }
+
                 interstitialTimeLeft = 10;
                 interstitialTimerDisplay.textContent = interstitialTimeLeft;
                 interstitialTimerInterval = setInterval(() => {
@@ -378,90 +673,85 @@
                         clearInterval(interstitialTimerInterval);
                         interstitialScreen.classList.add('hidden');
                         gameScreen.classList.remove('hidden');
-                        resetBlock(); // Asegura que el siguiente bloque se inicie correctamente
+                        resetBlock();
                         startTimer();
                     }
                 }, 1000);
             } else {
-                showResults();
+                // All blocks completed, show mood assessment screen
+                gameScreen.classList.add('hidden');
+                interstitialScreen.classList.add('hidden');
+                showMoodAssessmentScreen();
             }
         }
 
-        // Función para resetear el estado del bloque
+        // Function to reset block state
         function resetBlock() {
             blockNumberDisplay.textContent = currentBlock;
-            currentBlockMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL');
-            blockErrors = 0; // Reinicia errores de este bloque
-            blockErrorsDisplay.textContent = blockErrors;
+            currentMoneyLargeDisplay.textContent = totalMoney.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+            
+            blockErrors = 0;
             blockSuccess = false;
-            blockSuccessesDisplay.textContent = '0';
             resetSequence();
-            feedbackMessage.textContent = '';
             userInput.value = '';
             userInput.disabled = false;
             submitButton.disabled = false;
         }
 
-        // Event listener para el botón de enviar respuesta
+        // Event listener for the submit button
         submitButton.addEventListener('click', () => {
             const userAnswer = parseInt(userInput.value);
 
             if (isNaN(userAnswer)) {
                 feedbackMessage.textContent = 'Por favor, ingresa un número válido.';
+                feedbackMessage.className = 'message error';
+                userInput.value = '';
+                userInput.focus();
                 return;
             }
 
             if (userAnswer === expectedNextNumber) {
-                // Respuesta correcta
                 currentNumber = userAnswer;
                 currentDisplay.textContent = currentNumber;
                 sequenceStep++;
                 expectedNextNumber = currentNumber - 13;
-                feedbackMessage.textContent = '';
+                feedbackMessage.textContent = '¡Correcto!';
+                feedbackMessage.className = 'message success';
                 userInput.value = '';
                 userInput.focus();
 
                 if (currentNumber <= 900) {
-                    // Secuencia completada con éxito
                     blockSuccess = true;
-                    blockSuccessesDisplay.textContent = '1';
-                    feedbackMessage.textContent = '¡Secuencia completada con éxito en este bloque!';
                     userInput.disabled = true;
                     submitButton.disabled = true;
                     endBlock('Éxito');
                 }
             } else {
-                // Respuesta incorrecta
                 recordError();
             }
         });
 
-        // Permitir enviar con Enter
+        // Allow submitting with Enter key
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !submitButton.disabled) {
                 submitButton.click();
             }
         });
 
-        // Función para calcular el índice de aprendizaje
+        // Function to calculate learning index
         function calculateLearningIndex() {
-            // Recopilar errores por bloque
             const errorsPerBlock = blockResults.map(b => b.errors);
-
-            // Obtener errores en bloque 1
             const errorsBlock1 = errorsPerBlock[0];
 
-            // Encontrar el menor número de errores en bloque 3 o 4 (índices 2 y 3)
             let errorsBlock3Or4 = Infinity;
-            if (errorsPerBlock.length > 2) { // Si existe bloque 3
+            if (errorsPerBlock.length > 2) {
                 errorsBlock3Or4 = Math.min(errorsBlock3Or4, errorsPerBlock[2]);
             }
-            if (errorsPerBlock.length > 3) { // Si existe bloque 4
+            if (errorsPerBlock.length > 3) {
                 errorsBlock3Or4 = Math.min(errorsBlock3Or4, errorsPerBlock[3]);
             }
 
-            let errorsForIndexCalculation = errorsBlock1; // Valor predeterminado si no hay B3 o B4
-
+            let errorsForIndexCalculation = errorsBlock1;
             if (errorsPerBlock.length > 2 && errorsPerBlock[2] !== undefined) {
                 errorsForIndexCalculation = Math.min(errorsForIndexCalculation, errorsPerBlock[2]);
             }
@@ -471,24 +761,18 @@
 
 
             if (errorsBlock1 === 0) {
-                // Caso: éxito en bloque 1 (0 errores)
-                // Usar tiempos si hay al menos un tiempo exitoso registrado
                 if (blockTimes.length > 0) {
-                    const timeBlock1 = blockTimes[0]; // Tiempo del primer éxito
+                    const timeBlock1 = blockTimes[0];
+                    let timeBlock3Or4 = timeBlock1;
 
-                    // Buscar el menor tiempo en bloque 3 o 4 (índices 2 y 3 de blockResults)
-                    let timeBlock3Or4 = timeBlock1; // Si no hay mejores tiempos, se usa el de B1
-
-                    // Verifica si el bloque 3 fue exitoso y tiene un tiempo válido
                     if (blockResults.length > 2 && blockResults[2].status === 'Éxito' && blockResults[2].time !== 'N/A') {
                         timeBlock3Or4 = Math.min(timeBlock3Or4, parseFloat(blockResults[2].time));
                     }
-                    // Verifica si el bloque 4 fue exitoso y tiene un tiempo válido
                     if (blockResults.length > 3 && blockResults[3].status === 'Éxito' && blockResults[3].time !== 'N/A') {
                         timeBlock3Or4 = Math.min(timeBlock3Or4, parseFloat(blockResults[3].time));
                     }
 
-                    if (timeBlock1 === 0) { // Evitar división por cero
+                    if (timeBlock1 === 0) {
                         return 'N/A (Tiempo en bloque 1 fue cero)';
                     } else {
                         return ((timeBlock1 - timeBlock3Or4) / timeBlock1).toFixed(2);
@@ -498,7 +782,6 @@
                     return 'N/A (No hay tiempos exitosos para calcular el índice)';
                 }
             } else if (errorsBlock1 > 0) {
-                // Caso: errores en bloque 1
                 const denominator = errorsBlock1;
                 if (denominator === 0) {
                     return 'N/A (División por cero)';
@@ -509,39 +792,150 @@
             }
         }
 
+        // NEW: Function to show mood assessment screen
+        function showMoodAssessmentScreen() {
+            moodAssessmentScreen.classList.remove('hidden');
+            // Ensure sliders are reset or at default values
+            moodSlider.value = finalMood; // Initialize with current finalMood (default 5, or what was set previously)
+            cognitiveSlider.value = finalCognitiveState; // Initialize with current finalCognitiveState
 
-        // Función para mostrar los resultados finales
+            // Update live display for initial values
+            moodValueDisplay.textContent = moodSlider.value;
+            cognitiveValueDisplay.textContent = cognitiveSlider.value;
+
+            // Add event listeners to update live display when sliders move
+            moodSlider.oninput = function() {
+                moodValueDisplay.textContent = this.value;
+                const thumbWidth = 25; // Approximate width of the slider thumb
+                const trackWidth = this.offsetWidth - thumbWidth;
+                const value = (this.value - this.min) / (this.max - this.min);
+                const offset = (thumbWidth / 2) - (value * thumbWidth);
+                moodValueDisplay.style.left = `calc(${value * 100}% + ${offset}px)`;
+            };
+
+            cognitiveSlider.oninput = function() {
+                cognitiveValueDisplay.textContent = this.value;
+                const thumbWidth = 25;
+                const trackWidth = this.offsetWidth - thumbWidth;
+                const value = (this.value - this.min) / (this.max - this.min);
+                const offset = (thumbWidth / 2) - (value * thumbWidth);
+                cognitiveValueDisplay.style.left = `calc(${value * 100}% + ${offset}px)`;
+            };
+
+            // Set initial positions for the value displays
+            // Small timeout to ensure slider is rendered before calculating offset
+            setTimeout(() => {
+                moodSlider.oninput();
+                cognitiveSlider.oninput();
+            }, 50);
+
+            // Add event listener for the continue button
+            continueToResultsButton.onclick = () => {
+                finalMood = parseInt(moodSlider.value);
+                finalCognitiveState = parseInt(cognitiveSlider.value);
+                moodAssessmentScreen.classList.add('hidden');
+                showResults();
+            };
+        }
+
+        // Function to copy results to clipboard
+        function copyResultsToClipboard() {
+            const errorsBlockData = [];
+            const timeBlockData = [];
+
+            for (let i = 0; i < 4; i++) {
+                errorsBlockData.push(blockResults[i] ? blockResults[i].errors : 'N/A');
+                timeBlockData.push(blockResults[i] ? (blockResults[i].time === 'N/A' ? 'N/A' : parseFloat(blockResults[i].time)) : 'N/A');
+            }
+
+            const dataToCopy = [
+                TASK_TYPE,          // Task Type (Ganancia/Perdida)
+                totalErrors,
+                totalMoney,
+                calculateLearningIndex(),
+                ...errorsBlockData, // Spread errors for each block
+                ...timeBlockData,   // Spread times for each block
+                finalMood,          // Final Mood
+                finalCognitiveState // Final Cognitive State
+            ].join('\t'); // Use tab as separator for spreadsheet columns
+
+            const dummyTextArea = document.createElement('textarea');
+            dummyTextArea.value = dataToCopy;
+            document.body.appendChild(dummyTextArea);
+            dummyTextArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    copyFeedbackMessage.textContent = '¡Datos copiados! Ahora puedes pegarlos en tu Google Sheet.';
+                    copyFeedbackMessage.style.color = '#38a169'; // Green color for success
+                } else {
+                    copyFeedbackMessage.textContent = 'Error al copiar. Por favor, copia manualmente.';
+                    copyFeedbackMessage.style.color = '#e53e3e'; // Red color for error
+                }
+            } catch (err) {
+                copyFeedbackMessage.textContent = 'Error al copiar. Tu navegador no soporta esta función. Por favor, copia manualmente.';
+                copyFeedbackMessage.style.color = '#e53e3e';
+                console.error('Error al intentar copiar:', err);
+            }
+            document.body.removeChild(dummyTextArea);
+            // Clear feedback message after a few seconds
+            setTimeout(() => {
+                copyFeedbackMessage.textContent = '';
+            }, 5000);
+        }
+
+        // Function to show final results
         function showResults() {
             gameScreen.classList.add('hidden');
-            interstitialScreen.classList.add('hidden'); // Asegurarse de que esta pantalla también se oculte
+            interstitialScreen.classList.add('hidden');
+            moodAssessmentScreen.classList.add('hidden'); // Ensure mood screen is hidden
             resultsScreen.classList.remove('hidden');
 
-            // Limpiar la lista de resultados antes de añadir nuevos
-            resultsListBody.innerHTML = ''; 
+            resultsListBody.innerHTML = '';
 
-            // Llenar la lista de resultados por bloque
             blockResults.forEach(res => {
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
-                    <strong>Bloque ${res.block}:</strong> 
-                    Errores: ${res.errors}, 
-                    Tiempo: ${res.time}s, 
-                    Estado: ${res.status}, 
+                    <strong>Bloque ${res.block}:</strong>
+                    Errores: ${res.errors},
+                    Tiempo: ${res.time}s,
                     Ganancia: ${res.moneyChange.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
                 `;
                 resultsListBody.appendChild(listItem);
             });
 
-            totalErrorsDisplay.textContent = totalErrors; // Mostrar errores totales
+            totalErrorsDisplay.textContent = totalErrors;
             finalMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL');
             learningIndexDisplay.textContent = calculateLearningIndex();
+            finalMoodDisplay.textContent = finalMood; // Display final mood
+            finalCognitiveDisplay.textContent = finalCognitiveState; // Display final cognitive state
+
+            // Set the Google Sheet URL when showing results
+            googleSheetLink.href = GOOGLE_SHEET_URL;
         }
 
-        // Iniciar el juego
+        // Event listener for the copy button
+        copyResultsButton.addEventListener('click', copyResultsToClipboard);
+
+        // Event listener to start the game
         startButton.addEventListener('click', () => {
             introScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
-            resetBlock(); // Asegura que el primer bloque se inicie correctamente
+            
+            totalMoney = 100000;
+            successfulSequencesCount = 0;
+            totalErrors = 0;
+            blockResults.length = 0;
+            blockTimes.length = 0;
+            currentBlock = 1;
+            moneyImagesContainer.innerHTML = '';
+
+            // Reset mood and cognitive state to default for a new game
+            finalMood = 5;
+            finalCognitiveState = 5;
+
+            resetBlock();
             startTimer();
         });
     </script>
