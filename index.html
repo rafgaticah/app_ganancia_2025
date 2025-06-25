@@ -115,7 +115,7 @@
             color: #4a5568;
             margin-bottom: 10px;
         }
-        .results-table {
+        .results-table { /* Esta clase ya no se usa para la tabla, pero se mantiene por si acaso */
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
@@ -149,6 +149,33 @@
             color: #3182ce;
             text-align: center;
             padding: 50px;
+        }
+        .results-detail-item {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 8px;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .block-result-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .block-result-list li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            background-color: #ffffff;
+        }
+        .block-result-list li:last-child {
+            border-bottom: none;
+        }
+        .block-result-list li strong {
+            color: #2d3748;
         }
     </style>
 </head>
@@ -206,20 +233,9 @@
             </div>
 
             <h2>Resumen por Bloque</h2>
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Bloque</th>
-                        <th>Errores</th>
-                        <th>Tiempo (s)</th>
-                        <th>Estado</th>
-                        <th>Ganancia/Pérdida por Bloque</th>
-                    </tr>
-                </thead>
-                <tbody id="results-table-body">
-                    <!-- Resultados se insertarán aquí -->
-                </tbody>
-            </table>
+            <ul id="results-list-body" class="block-result-list">
+                <!-- Resultados por bloque se insertarán aquí -->
+            </ul>
 
             <h2 class="mt-8">Errores Totales: <span id="total-errors-display">0</span></h2>
             <h2 class="final-money">Dinero Final Total: $<span id="final-money-display"></span></h2>
@@ -274,7 +290,7 @@
         const feedbackMessage = document.getElementById('feedback-message');
         const blockErrorsDisplay = document.getElementById('block-errors');
         const blockSuccessesDisplay = document.getElementById('block-successes');
-        const resultsTableBody = document.getElementById('results-table-body');
+        const resultsListBody = document.getElementById('results-list-body'); // CAMBIO: Ahora es una lista UL
         const finalMoneyDisplay = document.getElementById('final-money-display');
         const learningIndexDisplay = document.getElementById('learning-index-display');
         const totalErrorsDisplay = document.getElementById('total-errors-display'); // Nuevo elemento DOM
@@ -500,15 +516,20 @@
             interstitialScreen.classList.add('hidden'); // Asegurarse de que esta pantalla también se oculte
             resultsScreen.classList.remove('hidden');
 
-            // Llenar la tabla de resultados
+            // Limpiar la lista de resultados antes de añadir nuevos
+            resultsListBody.innerHTML = ''; 
+
+            // Llenar la lista de resultados por bloque
             blockResults.forEach(res => {
-                // CORRECCIÓN AQUÍ: Usar insertRow() en tbody, no insertCell()
-                const row = resultsTableBody.insertRow();
-                row.insertCell().textContent = res.block;
-                row.insertCell().textContent = res.errors;
-                row.insertCell().textContent = res.time;
-                row.insertCell().textContent = res.status;
-                row.insertCell().textContent = res.moneyChange.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <strong>Bloque ${res.block}:</strong> 
+                    Errores: ${res.errors}, 
+                    Tiempo: ${res.time}s, 
+                    Estado: ${res.status}, 
+                    Ganancia: ${res.moneyChange.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
+                `;
+                resultsListBody.appendChild(listItem);
             });
 
             totalErrorsDisplay.textContent = totalErrors; // Mostrar errores totales
