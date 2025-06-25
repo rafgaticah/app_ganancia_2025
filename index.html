@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganancia: Ejercicio Aritmético</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #1a202c;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .instructions, .results-summary {
+            text-align: left;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            color: #4a5568;
+        }
+        .task-area {
+            background-color: #e2e8f0;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .current-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3182ce;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            padding: 12px 20px;
+            border: 2px solid #a0aec0;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            width: 150px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus {
+            border-color: #3182ce;
+            outline: none;
+        }
+        button {
+            background-color: #3182ce;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #2b6cb0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button:disabled {
+            background-color: #cbd5e0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #e53e3e;
+            min-height: 24px; /* Para evitar CLS */
+        }
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .block-info {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .results-table th, .results-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        .results-table th {
+            background-color: #edf2f7;
+            color: #2d3748;
+            font-weight: bold;
+        }
+        .results-table td {
+            background-color: #ffffff;
+            color: #4a5568;
+        }
+        .final-money {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #38a169;
+            margin-top: 30px;
+        }
+        .hidden {
+            display: none;
+        }
+        .interstitial-screen {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3182ce;
+            text-align: center;
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="intro-screen">
+            <h1>¡Bienvenido/a al Ejercicio de Ganancia!</h1>
+            <div class="instructions">
+                <p>Este ejercicio es una adaptación de una actividad utilizada para estudiar la relación entre motivación y desempeño.</p>
+                <p>Tu objetivo es realizar una <strong>sustracción sucesiva de 13 unidades</strong>, partiendo desde el número <strong>1000</strong>, hasta <strong>superar el número 900</strong>. Deberás ingresar el siguiente número en la secuencia.</p>
+                <p>Tienes <strong>4 bloques de un minuto</strong> de duración cada uno. Si cometes un error, la secuencia <strong>se reiniciará automáticamente desde 1000</strong>. Si logras superar el 900, el bloque se considera exitoso y no necesitarás seguir intentando en ese bloque.</p>
+                <p>Al inicio, cuentas con <strong>\$100.000 de dinero ficticio</strong>. Recibirás dinero adicional por cada secuencia exitosa de la siguiente manera:</p>
+                <ul class="list-disc pl-5 mt-2">
+                    <li>Primera secuencia exitosa: <strong>\$10.000</strong></li>
+                    <li>Segunda secuencia exitosa: <strong>\$20.000</strong></li>
+                    <li>Tercera secuencia exitosa: <strong>\$20.000</strong></li>
+                    <li>Cuarta secuencia exitosa: <strong>\$50.000</strong></li>
+                </ul>
+                <p class="mt-4">¡Tu desempeño influirá directamente en la cantidad de dinero que acumules!</p>
+            </div>
+            <button id="start-button">Comenzar Ejercicio</button>
+        </div>
+
+        <div id="game-screen" class="hidden">
+            <h1 class="mb-4">Ejercicio de Sustracción Sucesiva</h1>
+            <div class="block-info">
+                <p>Bloque: <span id="block-number">1</span> / 4</p>
+                <p>Dinero inicial: $<span id="current-block-money">100.000</span></p>
+            </div>
+            <div class="timer-display">Tiempo restante: <span id="timer">60</span> segundos</div>
+            <div class="task-area">
+                <p class="text-xl text-gray-700 mb-3">Número actual:</p>
+                <div class="current-number" id="current-display">1000</div>
+                <div class="input-group">
+                    <input type="number" id="user-input" placeholder="Ingresa tu respuesta">
+                    <button id="submit-button">Enviar</button>
+                </div>
+                <div class="message" id="feedback-message"></div>
+            </div>
+            <div class="block-details text-gray-600 text-sm">
+                <p>Errores en este bloque: <span id="block-errors">0</span></p>
+                <p>Secuencias completadas en este bloque: <span id="block-successes">0</span></p>
+            </div>
+        </div>
+
+        <div id="interstitial-screen" class="hidden interstitial-screen">
+            <p>Preparando siguiente bloque...</p>
+            <p>El siguiente bloque comienza en <span id="interstitial-timer">10</span> segundos.</p>
+        </div>
+
+        <div id="results-screen" class="hidden">
+            <h1>Resultados del Ejercicio</h1>
+            <div class="results-summary">
+                <p>Aquí se presentan los resultados finales de tu desempeño en el ejercicio.</p>
+            </div>
+
+            <h2>Resumen por Bloque</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Bloque</th>
+                        <th>Errores</th>
+                        <th>Tiempo (s)</th>
+                        <th>Estado</th>
+                        <th>Ganancia/Pérdida por Bloque</th>
+                    </tr>
+                </thead>
+                <tbody id="results-table-body">
+                    <!-- Resultados se insertarán aquí -->
+                </tbody>
+            </table>
+
+            <h2 class="mt-8">Errores Totales: <span id="total-errors-display">0</span></h2>
+            <h2 class="final-money">Dinero Final Total: $<span id="final-money-display"></span></h2>
+            <h2 class="mt-8">Índice de Aprendizaje: <span id="learning-index-display"></span></h2>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentNumber = 1000;
+        let expectedNextNumber = 1000 - 13;
+        let sequenceStep = 0; // Para rastrear el paso actual en la secuencia 1000, 987, 974...
+        let timerInterval;
+        let interstitialTimerInterval;
+        let timeLeft = 60;
+        let interstitialTimeLeft = 10;
+        let currentBlock = 1;
+        const totalBlocks = 4;
+        let totalMoney = 100000; // Dinero inicial para el grupo G
+        let successfulSequencesCount = 0; // Para el cálculo de dinero
+        let blockErrors = 0;
+        let totalErrors = 0; // Nueva variable para errores totales
+        let blockSuccess = false;
+        let blockStartTime;
+        let blockEndTime;
+        let blockTimes = []; // Almacena los tiempos en segundos de los bloques exitosos
+
+        // Almacenar los resultados de cada bloque
+        const blockResults = [];
+
+        // Recompensas
+        const rewards = {
+            1: 10000,
+            2: 20000,
+            3: 20000,
+            4: 50000
+        };
+
+        // Elementos del DOM
+        const introScreen = document.getElementById('intro-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const interstitialScreen = document.getElementById('interstitial-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const startButton = document.getElementById('start-button');
+        const blockNumberDisplay = document.getElementById('block-number');
+        const currentBlockMoneyDisplay = document.getElementById('current-block-money');
+        const timerDisplay = document.getElementById('timer');
+        const interstitialTimerDisplay = document.getElementById('interstitial-timer');
+        const currentDisplay = document.getElementById('current-display');
+        const userInput = document.getElementById('user-input');
+        const submitButton = document.getElementById('submit-button');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const blockErrorsDisplay = document.getElementById('block-errors');
+        const blockSuccessesDisplay = document.getElementById('block-successes');
+        const resultsTableBody = document.getElementById('results-table-body');
+        const finalMoneyDisplay = document.getElementById('final-money-display');
+        const learningIndexDisplay = document.getElementById('learning-index-display');
+        const totalErrorsDisplay = document.getElementById('total-errors-display'); // Nuevo elemento DOM
+
+        // Función para resetear la secuencia
+        function resetSequence() {
+            currentNumber = 1000;
+            expectedNextNumber = 1000 - 13;
+            sequenceStep = 0;
+            currentDisplay.textContent = currentNumber;
+            feedbackMessage.textContent = '';
+            userInput.value = '';
+            userInput.focus();
+        }
+
+        // Función para iniciar el temporizador de un bloque
+        function startTimer() {
+            timeLeft = 60;
+            timerDisplay.textContent = timeLeft;
+            blockStartTime = Date.now();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endBlock('Tiempo agotado');
+                }
+            }, 1000);
+        }
+
+        // Función para registrar un error
+        function recordError() {
+            blockErrors++;
+            totalErrors++; // Incrementa los errores totales
+            blockErrorsDisplay.textContent = blockErrors;
+            feedbackMessage.textContent = '¡Error! Reiniciando secuencia desde 1000.';
+            resetSequence(); // Reinicia automáticamente la secuencia
+        }
+
+        // Función para finalizar un bloque
+        function endBlock(status) {
+            clearInterval(timerInterval);
+            blockEndTime = Date.now();
+            let timeTaken = (blockEndTime - blockStartTime) / 1000; // Tiempo en segundos
+
+            let moneyEarnedThisBlock = 0;
+            let blockStatus = status;
+            let blockTimeForTable = 'N/A'; // Default para bloques no exitosos
+
+            if (blockSuccess) {
+                successfulSequencesCount++;
+                moneyEarnedThisBlock = rewards[successfulSequencesCount] || 0;
+                totalMoney += moneyEarnedThisBlock;
+                blockStatus = 'Éxito';
+                blockTimes.push(timeTaken); // Solo registra el tiempo si fue exitoso
+                blockTimeForTable = timeTaken.toFixed(2);
+            } else if (status === 'Tiempo agotado') {
+                blockStatus = 'Tiempo agotado';
+                moneyEarnedThisBlock = 0;
+                blockTimeForTable = '60.00'; // Se agotó el tiempo, reportar 60 segundos
+            } else {
+                 blockStatus = 'Fallo'; // Esto sería si el usuario se rinde o algo similar
+                 moneyEarnedThisBlock = 0;
+            }
+
+            blockResults.push({
+                block: currentBlock,
+                errors: blockErrors,
+                time: blockTimeForTable,
+                status: blockStatus,
+                moneyChange: moneyEarnedThisBlock
+            });
+
+            currentBlock++;
+            if (currentBlock <= totalBlocks) {
+                // Mostrar pantalla intersticial y empezar cuenta regresiva
+                gameScreen.classList.add('hidden');
+                interstitialScreen.classList.remove('hidden');
+                interstitialTimeLeft = 10;
+                interstitialTimerDisplay.textContent = interstitialTimeLeft;
+                interstitialTimerInterval = setInterval(() => {
+                    interstitialTimeLeft--;
+                    interstitialTimerDisplay.textContent = interstitialTimeLeft;
+                    if (interstitialTimeLeft <= 0) {
+                        clearInterval(interstitialTimerInterval);
+                        interstitialScreen.classList.add('hidden');
+                        gameScreen.classList.remove('hidden');
+                        resetBlock(); // Asegura que el siguiente bloque se inicie correctamente
+                        startTimer();
+                    }
+                }, 1000);
+            } else {
+                showResults();
+            }
+        }
+
+        // Función para resetear el estado del bloque
+        function resetBlock() {
+            blockNumberDisplay.textContent = currentBlock;
+            currentBlockMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL');
+            blockErrors = 0; // Reinicia errores de este bloque
+            blockErrorsDisplay.textContent = blockErrors;
+            blockSuccess = false;
+            blockSuccessesDisplay.textContent = '0';
+            resetSequence();
+            feedbackMessage.textContent = '';
+            userInput.value = '';
+            userInput.disabled = false;
+            submitButton.disabled = false;
+        }
+
+        // Event listener para el botón de enviar respuesta
+        submitButton.addEventListener('click', () => {
+            const userAnswer = parseInt(userInput.value);
+
+            if (isNaN(userAnswer)) {
+                feedbackMessage.textContent = 'Por favor, ingresa un número válido.';
+                return;
+            }
+
+            if (userAnswer === expectedNextNumber) {
+                // Respuesta correcta
+                currentNumber = userAnswer;
+                currentDisplay.textContent = currentNumber;
+                sequenceStep++;
+                expectedNextNumber = currentNumber - 13;
+                feedbackMessage.textContent = '';
+                userInput.value = '';
+                userInput.focus();
+
+                if (currentNumber <= 900) {
+                    // Secuencia completada con éxito
+                    blockSuccess = true;
+                    blockSuccessesDisplay.textContent = '1';
+                    feedbackMessage.textContent = '¡Secuencia completada con éxito en este bloque!';
+                    userInput.disabled = true;
+                    submitButton.disabled = true;
+                    endBlock('Éxito');
+                }
+            } else {
+                // Respuesta incorrecta
+                recordError();
+            }
+        });
+
+        // Permitir enviar con Enter
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !submitButton.disabled) {
+                submitButton.click();
+            }
+        });
+
+        // Función para calcular el índice de aprendizaje
+        function calculateLearningIndex() {
+            // Recopilar errores por bloque
+            const errorsPerBlock = blockResults.map(b => b.errors);
+
+            // Obtener errores en bloque 1
+            const errorsBlock1 = errorsPerBlock[0];
+
+            // Encontrar el menor número de errores en bloque 3 o 4 (índices 2 y 3)
+            let errorsBlock3Or4 = Infinity;
+            if (errorsPerBlock.length > 2) { // Si existe bloque 3
+                errorsBlock3Or4 = Math.min(errorsBlock3Or4, errorsPerBlock[2]);
+            }
+            if (errorsPerBlock.length > 3) { // Si existe bloque 4
+                errorsBlock3Or4 = Math.min(errorsBlock3Or4, errorsPerBlock[3]);
+            }
+
+            let errorsForIndexCalculation = errorsBlock1; // Valor predeterminado si no hay B3 o B4
+
+            if (errorsPerBlock.length > 2 && errorsPerBlock[2] !== undefined) {
+                errorsForIndexCalculation = Math.min(errorsForIndexCalculation, errorsPerBlock[2]);
+            }
+            if (errorsPerBlock.length > 3 && errorsPerBlock[3] !== undefined) {
+                errorsForIndexCalculation = Math.min(errorsForIndexCalculation, errorsPerBlock[3]);
+            }
+
+
+            if (errorsBlock1 === 0) {
+                // Caso: éxito en bloque 1 (0 errores)
+                // Usar tiempos si hay al menos un tiempo exitoso registrado
+                if (blockTimes.length > 0) {
+                    const timeBlock1 = blockTimes[0]; // Tiempo del primer éxito
+
+                    // Buscar el menor tiempo en bloque 3 o 4 (índices 2 y 3 de blockResults)
+                    let timeBlock3Or4 = timeBlock1; // Si no hay mejores tiempos, se usa el de B1
+
+                    // Verifica si el bloque 3 fue exitoso y tiene un tiempo válido
+                    if (blockResults.length > 2 && blockResults[2].status === 'Éxito' && blockResults[2].time !== 'N/A') {
+                        timeBlock3Or4 = Math.min(timeBlock3Or4, parseFloat(blockResults[2].time));
+                    }
+                    // Verifica si el bloque 4 fue exitoso y tiene un tiempo válido
+                    if (blockResults.length > 3 && blockResults[3].status === 'Éxito' && blockResults[3].time !== 'N/A') {
+                        timeBlock3Or4 = Math.min(timeBlock3Or4, parseFloat(blockResults[3].time));
+                    }
+
+                    if (timeBlock1 === 0) { // Evitar división por cero
+                        return 'N/A (Tiempo en bloque 1 fue cero)';
+                    } else {
+                        return ((timeBlock1 - timeBlock3Or4) / timeBlock1).toFixed(2);
+                    }
+
+                } else {
+                    return 'N/A (No hay tiempos exitosos para calcular el índice)';
+                }
+            } else if (errorsBlock1 > 0) {
+                // Caso: errores en bloque 1
+                const denominator = errorsBlock1;
+                if (denominator === 0) {
+                    return 'N/A (División por cero)';
+                }
+                return ((errorsBlock1 - errorsForIndexCalculation) / denominator).toFixed(2);
+            } else {
+                return 'N/A (Sin datos de errores en bloque 1)';
+            }
+        }
+
+
+        // Función para mostrar los resultados finales
+        function showResults() {
+            gameScreen.classList.add('hidden');
+            interstitialScreen.classList.add('hidden'); // Asegurarse de que esta pantalla también se oculte
+            resultsScreen.classList.remove('hidden');
+
+            // Llenar la tabla de resultados
+            blockResults.forEach(res => {
+                const row = resultsTableBody.insertCell();
+                row.insertCell().textContent = res.block;
+                row.insertCell().textContent = res.errors;
+                row.insertCell().textContent = res.time;
+                row.insertCell().textContent = res.status;
+                row.insertCell().textContent = res.moneyChange.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+            });
+
+            totalErrorsDisplay.textContent = totalErrors; // Mostrar errores totales
+            finalMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL');
+            learningIndexDisplay.textContent = calculateLearningIndex();
+        }
+
+        // Iniciar el juego
+        startButton.addEventListener('click', () => {
+            introScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            resetBlock(); // Asegura que el primer bloque se inicie correctamente
+            startTimer();
+        });
+    </script>
+</body>
+</html>
