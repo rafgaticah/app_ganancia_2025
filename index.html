@@ -502,7 +502,8 @@
 
             // Llenar la tabla de resultados
             blockResults.forEach(res => {
-                const row = resultsTableBody.insertCell();
+                // CORRECCIÓN AQUÍ: Usar insertRow() en tbody, no insertCell()
+                const row = resultsTableBody.insertRow();
                 row.insertCell().textContent = res.block;
                 row.insertCell().textContent = res.errors;
                 row.insertCell().textContent = res.time;
