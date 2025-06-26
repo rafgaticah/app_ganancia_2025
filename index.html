@@ -59,6 +59,20 @@
             font-weight: bold;
             color: #3182ce;
             margin-bottom: 20px;
+            display: flex; /* Use flexbox to align number and instruction */
+            justify-content: center;
+            align-items: baseline; /* Align text at baseline */
+            gap: 10px; /* Space between number and instruction */
+        }
+        .current-number-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3182ce;
+        }
+        .current-number-instruction {
+            font-size: 1.2rem; /* Smaller size for the instruction text */
+            color: #4a5568;
+            font-weight: normal;
         }
         .input-group {
             display: flex;
@@ -162,8 +176,8 @@
         .result-metric-large {
             font-size: 1.8rem;
             font-weight: bold;
-            margin-top: 15px; /* Adjust margin as needed */
-            margin-bottom: 15px; /* Adjust margin as needed */
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
         .text-black { color: #000000; }
         .text-red-500 { color: #ef4444; }
@@ -394,8 +408,7 @@
         <div id="intro-screen">
             <h1>¡Bienvenido/a al Ejercicio de Ganancia!</h1>
             <div class="instructions">
-                <p>Este ejercicio es una adaptación de una actividad utilizada para estudiar la relación entre motivación y desempeño.</p>
-                <p>Tu objetivo es realizar una <strong>sustracción sucesiva de 13 unidades</strong>, partiendo desde el número <strong>1000</strong>, hasta <strong>superar el número 900</strong>. Deberás ingresar el siguiente número en la secuencia.</p>
+                <p>Tu objetivo es realizar una secuencia numérica descendente del tipo 1000, 990, 980... (solo mentalmente, sin ayudas), partiendo desde el número 1000, hasta superar el número 900. Deberás ingresar el siguiente número en la secuencia según valor a restar que se te indicará en pantalla.</p>
                 <p>Tienes <strong>4 bloques de un minuto</strong> de duración cada uno. Si cometes un error, la secuencia <strong>se reiniciará automáticamente desde 1000</strong>. Si logras superar el 900, el bloque se considera exitoso y no necesitarás seguir intentando en ese bloque.</p>
                 <p>Al inicio, cuentas con <strong>$100.000 de dinero ficticio</strong>. Recibirás dinero adicional por cada secuencia exitosa de la siguiente manera:</p>
                 <ul class="list-disc pl-5 mt-2">
@@ -410,6 +423,7 @@
         </div>
 
         <div id="game-screen" class="hidden">
+            
             <!-- Bloque de información movido y estilizado -->
             <div class="block-number-display-large">
                 Bloque: <span id="block-number">1</span> / 4
@@ -425,7 +439,10 @@
             <div class="timer-display">Tiempo restante: <span id="timer">60</span> segundos</div>
             <div class="task-area">
                 <p class="text-xl text-gray-700 mb-3">Número actual:</p>
-                <div class="current-number" id="current-display">1000</div>
+                <div class="current-number">
+                    <span id="current-display" class="current-number-text">1000</span>
+                    <span class="current-number-instruction">(resta 13)</span>
+                </div>
                 <div class="input-group">
                     <input type="number" id="user-input" placeholder="Ingresa tu respuesta">
                     <button id="submit-button">Enviar</button>
@@ -565,7 +582,7 @@
         const finalMoneyDisplay = document.getElementById('final-money-display');
         const learningIndexDisplay = document.getElementById('learning-index-display');
         const totalErrorsDisplay = document.getElementById('total-errors-display');
-        const excelLink = document.getElementById('excel-link'); // Changed from googleSheetLink
+        const excelLink = document.getElementById('excel-link');
 
         const currentMoneyLargeDisplay = document.getElementById('current-money-large');
         const moneyImagesContainer = document.getElementById('money-images-container');
@@ -816,8 +833,8 @@
         function showMoodAssessmentScreen() {
             moodAssessmentScreen.classList.remove('hidden');
             // Ensure sliders are reset or at default values
-            moodSlider.value = finalMood; // Initialize with current finalMood (default 5, or what was set previously)
-            cognitiveSlider.value = finalCognitiveState; // Initialize with current finalCognitiveState
+            moodSlider.value = finalMood;
+            cognitiveSlider.value = finalCognitiveState;
 
             // Update live display for initial values
             moodValueDisplay.textContent = moodSlider.value;
@@ -826,13 +843,11 @@
             // Add event listeners to update live display when sliders move
             moodSlider.oninput = function() {
                 moodValueDisplay.textContent = this.value;
-                const thumbWidth = 25; // Approximate width of the slider thumb
+                const thumbWidth = 25;
                 const trackWidth = this.offsetWidth - thumbWidth;
                 const value = (this.value - this.min) / (this.max - this.min);
-                // Calculate the position of the value display relative to the slider track
                 const displayPosition = value * trackWidth;
                 moodValueDisplay.style.left = `${displayPosition}px`;
-                // Adjust for centering the value display over the thumb
                 const offset = thumbWidth * (0.5 - value);
                 moodValueDisplay.style.transform = `translateX(${offset}px)`;
             };
@@ -870,22 +885,21 @@
             const errorsBlockData = [];
             const timeBlockData = [];
 
-            // Ensure all 4 blocks have data, fill with 'N/A' if not completed
             for (let i = 0; i < totalBlocks; i++) {
                 errorsBlockData.push(blockResults[i] ? blockResults[i].errors : 'N/A');
                 timeBlockData.push(blockResults[i] ? (blockResults[i].time === 'N/A' ? 'N/A' : parseFloat(blockResults[i].time)) : 'N/A');
             }
 
             const dataToCopy = [
-                TASK_TYPE,          // Task Type (Ganancia/Perdida)
+                TASK_TYPE,
                 totalErrors,
                 totalMoney,
                 calculateLearningIndex(),
-                ...errorsBlockData, // Spread errors for each block
-                ...timeBlockData,   // Spread times for each block
-                finalMood,          // Final Mood
-                finalCognitiveState // Final Cognitive State
-            ].join('\t'); // Use tab as separator for spreadsheet columns
+                ...errorsBlockData,
+                ...timeBlockData,
+                finalMood,
+                finalCognitiveState
+            ].join('\t');
 
             const dummyTextArea = document.createElement('textarea');
             dummyTextArea.value = dataToCopy;
@@ -896,10 +910,10 @@
                 const successful = document.execCommand('copy');
                 if (successful) {
                     copyFeedbackMessage.textContent = '¡Datos copiados! Ahora puedes pegarlos en tu hoja de Excel.';
-                    copyFeedbackMessage.style.color = '#38a169'; // Green color for success
+                    copyFeedbackMessage.style.color = '#38a169';
                 } else {
                     copyFeedbackMessage.textContent = 'Error al copiar. Por favor, copia manualmente.';
-                    copyFeedbackMessage.style.color = '#e53e3e'; // Red color for error
+                    copyFeedbackMessage.style.color = '#e53e3e';
                 }
             } catch (err) {
                 copyFeedbackMessage.textContent = 'Error al copiar. Tu navegador no soporta esta función. Por favor, copia manualmente.';
@@ -907,7 +921,6 @@
                 console.error('Error al intentar copiar:', err);
             }
             document.body.removeChild(dummyTextArea);
-            // Clear feedback message after a few seconds
             setTimeout(() => {
                 copyFeedbackMessage.textContent = '';
             }, 5000);
@@ -917,12 +930,11 @@
         function showResults() {
             gameScreen.classList.add('hidden');
             interstitialScreen.classList.add('hidden');
-            moodAssessmentScreen.classList.add('hidden'); // Ensure mood screen is hidden
+            moodAssessmentScreen.classList.add('hidden');
             resultsScreen.classList.remove('hidden');
 
             resultsListBody.innerHTML = '';
 
-            // Ensure all 4 blocks are represented in the results list, even if incomplete
             for (let i = 0; i < totalBlocks; i++) {
                 const res = blockResults[i] || { block: i + 1, errors: 'N/A', time: 'N/A', moneyChange: 0 };
                 const listItem = document.createElement('li');
@@ -939,10 +951,9 @@
             totalErrorsDisplay.textContent = totalErrors;
             finalMoneyDisplay.textContent = totalMoney.toLocaleString('es-CL');
             learningIndexDisplay.textContent = calculateLearningIndex();
-            finalMoodDisplay.textContent = finalMood; // Display final mood
-            finalCognitiveDisplay.textContent = finalCognitiveState; // Display final cognitive state
+            finalMoodDisplay.textContent = finalMood;
+            finalCognitiveDisplay.textContent = finalCognitiveState;
 
-            // Set the Excel URL when showing results
             excelLink.href = EXCEL_URL;
         }
 
@@ -962,7 +973,6 @@
             currentBlock = 1;
             moneyImagesContainer.innerHTML = '';
 
-            // Reset mood and cognitive state to default for a new game
             finalMood = 5;
             finalCognitiveState = 5;
 
