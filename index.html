@@ -825,11 +825,11 @@
                 }
                 return ((errorsBlock1 - errorsForIndexCalculation) / denominator).toFixed(2);
             } else {
-                return 'N/A (Sin datos de errores en bloque 1)';
+                    return 'N/A (Sin datos de errores en bloque 1)';
             }
         }
 
-        // NEW: Function to show mood assessment screen
+        // Function to show mood assessment screen
         function showMoodAssessmentScreen() {
             moodAssessmentScreen.classList.remove('hidden');
             moodSlider.value = finalMood;
@@ -860,15 +860,11 @@
                 cognitiveValueDisplay.style.transform = `translateX(${offset}px)`;
             };
 
-
-            // Set initial positions for the value displays
-            // Small timeout to ensure slider is rendered before calculating offset
             setTimeout(() => {
                 moodSlider.oninput();
                 cognitiveSlider.oninput();
             }, 50);
 
-            // Add event listener for the continue button
             continueToResultsButton.onclick = () => {
                 finalMood = parseInt(moodSlider.value);
                 finalCognitiveState = parseInt(cognitiveSlider.value);
