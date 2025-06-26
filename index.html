@@ -408,7 +408,7 @@
         <div id="intro-screen">
             <h1>¡Bienvenido/a al Ejercicio de Ganancia!</h1>
             <div class="instructions">
-                <p>Tu objetivo es realizar una secuencia numérica descendente del tipo 1000, 990, 980... (solo mentalmente, sin ayudas), partiendo desde el número 1000, hasta superar el número 900. Deberás ingresar el siguiente número en la secuencia según valor a restar que se te indicará en pantalla.</p>
+                <p>Tu objetivo es realizar una secuencia numérica descendente del tipo 1000, 990, 980... (solo mentalmente, sin ayudas), partiendo desde el número 1000, hasta superar el número 900. Deberás ingresar el siguiente número en la secuencia según valor a restar que se te indicará en pantalla. Escribe el número y presiona enviar en la pantalla o enter del teclado.</p>
                 <p>Tienes <strong>4 bloques de un minuto</strong> de duración cada uno. Si cometes un error, la secuencia <strong>se reiniciará automáticamente desde 1000</strong>. Si logras superar el 900, el bloque se considera exitoso y no necesitarás seguir intentando en ese bloque.</p>
                 <p>Al inicio, cuentas con <strong>$100.000 de dinero ficticio</strong>. Recibirás dinero adicional por cada secuencia exitosa de la siguiente manera:</p>
                 <ul class="list-disc pl-5 mt-2">
@@ -832,15 +832,12 @@
         // NEW: Function to show mood assessment screen
         function showMoodAssessmentScreen() {
             moodAssessmentScreen.classList.remove('hidden');
-            // Ensure sliders are reset or at default values
             moodSlider.value = finalMood;
             cognitiveSlider.value = finalCognitiveState;
 
-            // Update live display for initial values
             moodValueDisplay.textContent = moodSlider.value;
             cognitiveValueDisplay.textContent = cognitiveSlider.value;
 
-            // Add event listeners to update live display when sliders move
             moodSlider.oninput = function() {
                 moodValueDisplay.textContent = this.value;
                 const thumbWidth = 25;
